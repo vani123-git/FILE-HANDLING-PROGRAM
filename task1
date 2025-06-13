@@ -1,0 +1,69 @@
+//TASK1 FILE_HANDLING_PROGRAM
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void create_file(const char *filename) {
+    FILE *file = fopen(filename, "w");  // Create and open for writing
+    if (file == NULL) {
+        printf("Error creating file!\n");
+        return;
+    }
+    fprintf(file, "This is the first line in the file.\n");
+    fclose(file);
+    printf("File created and data written.\n");
+}
+
+void read_file(const char *filename) {
+    FILE *file = fopen(filename, "r");  // Open for reading
+    char ch;
+
+    if (file == NULL) {
+        printf("Error: File does not exist or cannot be opened.\n");
+        return;
+    }
+
+    printf("File contents:\n");
+    while ((ch = fgetc(file)) != EOF) {
+        putchar(ch);
+    }
+
+    fclose(file);
+}
+
+void write_file(const char *filename) {
+    FILE *file = fopen(filename, "w");  // Overwrite existing file
+    if (file == NULL) {
+        printf("Error opening file for writing!\n");
+        return;
+    }
+    fprintf(file, "This is new content. Previous data is overwritten.\n");
+    fclose(file);
+    printf("File overwritten with new data.\n");
+}
+
+void append_file(const char *filename) {
+    FILE *file = fopen(filename, "a");  // Open for appending
+    if (file == NULL) {
+        printf("Error opening file for appending!\n");
+        return;
+    }
+    fprintf(file, "This line is appended to the file.\n");
+    fclose(file);
+    printf("Data appended to the file.\n");
+}
+
+int main() {
+    const char *filename = "example.txt";
+
+    create_file(filename);
+    read_file(filename);
+
+    write_file(filename);
+    read_file(filename);
+
+    append_file(filename);
+    read_file(filename);
+
+    return 0;
+}
